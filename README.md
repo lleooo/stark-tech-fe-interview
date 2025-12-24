@@ -1,7 +1,17 @@
+
+
 # Todo API Backend
 
 前端評測輔助用 Todo REST API - 最小可用的 Next.js 15 Todo API，無需資料庫與環境變數，啟動即有內建種
 子資料。
+
+### 版本升級說明
+
+本專案已將 Next.js 從 15.x 升級至 16.x，以修復 Vercel 部署時的安全漏洞警告 (CVE-2025-66478)。
+## 🚀 線上 Demo- **網站**:
+ https://stark-tech-fe-interview-gamma.vercel.app
+
+
 
 ## 📖 API 文檔
 
@@ -215,26 +225,61 @@ curl -X POST http://localhost:3001/api/todos \
 
 ```
 src/
+  actions/
+    todo/
+      createTask.ts          # 新增任務 API 呼叫
+      getTasks.ts            # 取得任務列表 API 呼叫
+      updateTask.ts          # 更新任務 API 呼叫
   app/
     api/
       todos/
-        route.ts           # GET (列表), POST (新增)
+        route.ts             # GET (列表), POST (新增)
         [id]/
-          route.ts         # GET, PATCH, DELETE (單筆)
+          route.ts           # GET, PATCH, DELETE (單筆)
         bulk/
-          route.ts         # PATCH (批次操作)
+          route.ts           # PATCH (批次操作)
       docs/
-        route.ts           # OpenAPI Spec JSON
+        route.ts             # OpenAPI Spec JSON
     docs/
-      page.tsx             # Swagger UI 頁面
+      page.tsx               # Swagger UI 頁面
+    docs-static/
+      page.tsx               # 靜態 Swagger 頁面
+    globals.css              # 全域樣式
+    layout.tsx               # 根佈局
+    page.tsx                 # 首頁
+    providers.tsx            # React Query Provider
+    ThemeRegistry.tsx        # MUI 主題與 Emotion SSR
+  assets/
+    icons/                   # 圖示資源
+      calendar.png, circle.png, filter.png, ...
+  components/
+    common/
+      DateTimePicker.tsx     # 日期時間選擇器
+      ToggleMenu.tsx         # 通用下拉選單
+    SortToggleMenu.tsx       # 排序選單
+    StatusToggleMenu.tsx     # 狀態篩選選單
+    TaskList/
+      TaskList.tsx           # 任務列表主元件
+      TaskListContent/
+        CreateTaskRow.tsx    # 新增任務列
+        TableHeadRow.tsx     # 表格標題列
+        TaskListContent.tsx  # 任務列表內容
+        TaskTable.tsx        # 任務表格
+        TitleCell.tsx        # 標題欄位
+        Toolbar.tsx          # 工具列
+  hooks/
+    useCreateTask.ts         # 新增任務 mutation hook
+    useUpdateTask.ts         # 更新任務 mutation hook (含樂觀更新)
   lib/
-    types.ts              # TypeScript 型別定義
-    data.ts               # 記憶體資料儲存
-    validations.ts        # Zod 驗證 schemas
-    cors.ts               # CORS 處理
-    responses.ts          # 統一回應格式
-    swagger.ts            # Swagger 配置
+    cors.ts                  # CORS 處理
+    data.ts                  # 記憶體資料儲存
+    date.ts                  # 日期格式化工具
+    responses.ts             # 統一回應格式
+    swagger.ts               # Swagger 配置
+    theme.ts                 # MUI 主題設定
+    types.ts                 # TypeScript 型別定義
+    validations.ts           # Zod 驗證 schemas
 data/
-  todos.seed.json         # 種子資料
-api.http                  # REST Client 測試檔
+  todos.seed.json            # 種子資料
+api.http                     # REST Client 測試檔
 ```
